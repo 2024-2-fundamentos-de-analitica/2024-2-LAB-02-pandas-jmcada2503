@@ -5,8 +5,15 @@ datos requeridos se encuentran en los archivos `tbl0.tsv`, `tbl1.tsv` y
 librerias de pandas para resolver las preguntas.
 """
 
-
+import pandas as pd
 def pregunta_13():
+    tbl0 = pd.read_csv("files/input/tbl0.tsv", sep="\t", header=0)
+    tbl2 = pd.read_csv("files/input/tbl2.tsv", sep="\t", header=0)
+    
+    merged_df = pd.merge(tbl0, tbl2, on="c0")
+    result = merged_df.groupby('c1')['c5b'].sum()
+    
+    return result
     """
     Si la columna `c0` es la clave en los archivos `tbl0.tsv` y `tbl2.tsv`,
     compute la suma de `tbl2.c5b` por cada valor en `tbl0.c1`.

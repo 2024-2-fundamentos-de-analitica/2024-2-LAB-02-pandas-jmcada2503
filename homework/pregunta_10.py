@@ -5,8 +5,20 @@ datos requeridos se encuentran en los archivos `tbl0.tsv`, `tbl1.tsv` y
 librerias de pandas para resolver las preguntas.
 """
 
-
+import pandas as pd
 def pregunta_10():
+    
+    
+    df = pd.read_csv("files/input/tbl0.tsv", sep="\t", header=0)
+
+    agrupados = df.groupby("c1")["c2"].apply(lambda valores: ":".join(map(str, sorted(valores))))
+
+    # Convertir el resultado en un DataFrame con 'c1' como índice
+    resultado = agrupados.to_frame()
+
+    return resultado
+
+
     """
     Construya una tabla que contenga `c1` y una lista separada por ':' de los
     valores de la columna `c2` para el archivo `tbl0.tsv`.

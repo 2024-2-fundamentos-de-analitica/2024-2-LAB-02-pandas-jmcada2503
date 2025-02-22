@@ -5,8 +5,18 @@ datos requeridos se encuentran en los archivos `tbl0.tsv`, `tbl1.tsv` y
 librerias de pandas para resolver las preguntas.
 """
 
-
+import pandas as pd
 def pregunta_12():
+    # Cargar el archivo en un DataFrame
+    datos = pd.read_csv("files/input/tbl2.tsv", sep="\t", header=0)
+    # Crear una nueva columna combinando 'c5a' y 'c5b' en formato 'c5a:c5b'
+    datos["valor_combinado"] = datos["c5a"] + ":" + datos["c5b"].astype(str)
+    # Agrupar por 'c0' y ordenar los valores combinados dentro de cada grupo
+    agrupados = datos.groupby("c0")["valor_combinado"].apply(lambda valores: ",".join(sorted(valores)))
+
+    tabla_resultante = agrupados.reset_index()
+    tabla_resultante.columns = ["c0", "c5"]
+    return tabla_resultante
     """
     Construya una tabla que contenga `c0` y una lista separada por ','
     de los valores de la columna `c5a`  y `c5b` (unidos por ':') de la
